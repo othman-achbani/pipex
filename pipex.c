@@ -6,63 +6,111 @@
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 19:32:30 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/08 21:53:53 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/10 12:03:06 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-// int	child_cmd1(char *av, char **env)
-// {
-// 	int fd;
-// 	char **str;
+char	*ft_check(char *str, char *path)
+{
+	char	**parse;
 
-// 	str = ft_split(av)
-// 	fd = open("test.txt", O_CREAT | O_RDWR , 0644);
-		
-// }
+	parse = ft_split(path , ':');
+
+	if (!parse)
+		return(NULL);
+	while (*parse)
+	{
+		if(access(str, X_OK) == 0)
+			return(ft_strjoin(*parse,str));
+		parse++;
+	}
+	ft_free(parse);
+	return (NULL);
+}
+
+void	child_cmd1(int *pipefd, char **av, char **env)
+{
+	char	**str;
+	char	*path;
+	char	*exe;
+	int		infd;
+
+	infd = open (av[1], O_RDONLY);
+	if (infd == -1)
+	{
+		perror("no such file or directory");
+		exit (0);
+	}
+	path = get_path(env);
+	str = ft_split(av[2], ' ');
+	exe = ft_check(str[0], path);
+	if (!exe)
+	{
+		ft_putstr_fd("command not found \n",2);
+		return(ft_free(str), free(path),exit(127));
+	}
+	if (dup2(pipefd[1] ,1) == -1 || dup2(infd, 0) == -1)
+	{
+		ft_putstr_fd("error while redirecting the file \n",2);
+		return(ft_free(str), free(path),exit(127));
+	}
+	execve(exe, str, env);
+	ft_putstr_fd("error executing the command" ,2);
+	exit(1);
+}
+
+void	second_cmd(int *pipefd, char **av, char **env)
+{
+	char	**str;
+	char	*path;
+	char	*exe;
+	int		oufd;
+
+	close (pipefd[1]);
+	wait(NULL);
+	oufd = open("test.txt", O_CREAT | O_RDWR, 0644);
+	if (oufd == -1)
+	{
+		ft_putstr_fd("input file not found \n",2);
+		return(ft_free(str), free(path),exit(127));
+	}
+	path = get_path(env);
+	str = ft_split(av[3], ' ');
+	exe = ft_check(str[0], path);
+	if (!exe)
+	{
+		ft_putstr_fd("command not found \n",2);
+		return(ft_free(str), free(path),exit(127));
+	}
+	if (dup2(pipefd[1] ,1) == -1 || dup2(oufd, 0) == -1)
+	{
+		ft_putstr_fd("error while redirecting the file \n",2);
+		exit(1);
+	}
+	execve(exe, str, env);
+	ft_putstr_fd("error executing the file \n",2);
+	exit(1);
+}
 
 int main (int ac , char **av, char **env)
 {
 	int		pipefd[2];
 	char	*PATH;
-	char buffer[250] ={0};
+	int		fd;
 
 	// if (ac != 5)
-	// 	return(write(1, "syntax erreur try : file1 cmd1 cmd2 file2 \n", 44), 1);
-	int i =pipe(pipefd);
-	if (i == -1)
+	// 	return(write(2, "syntax erreur try : file1 cmd1 cmd2 file2 \n", 44), 1);
+	if (pipe(pipefd))
 	{
 		perror("error while opening the pipe");
 		exit(1);
 	}
+	ft_checknull(av);
 	pid_t pid = fork();
 	if (pid == 0)
-	{
-		// close(pipefd[1]);
-		
-		if (dup2(pipefd[1], 1) == -1)
-		{
-			perror ("error redirecting the fd");
-			exit(EXIT_FAILURE);
-		}
-		close(pipefd[1]);
-	 	char *ls_args[] = { "ls", NULL };
-	 	execve("/bin/ls" ,ls_args, NULL);
-	}
+		child_cmd1(pipefd ,av, env);
 	else
-	{
-		wait(NULL);
-		int fd = open("test.txt", O_CREAT | O_RDWR, 0644);
-		if (dup2(pipefd[0], 0) == -1 || dup2(fd, 1) == -1)
-		{
-			perror("error redirecting the fd");
-			exit(EXIT_FAILURE);
-		}
-		close(fd);
-		close(pipefd[1]);
-		char *ls_args[] = { "wc","-l", NULL };
-		
-		execve("/bin/wc" ,ls_args , NULL);
-	}
+		second_cmd(pipefd, av, env);
 }

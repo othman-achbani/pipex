@@ -6,7 +6,7 @@
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 17:43:50 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/08 17:47:49 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/09 16:12:18 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,51 @@ void	*ft_memset(void *ptr, int value, size_t num)
 		p[i] = value;
 		i++;
 	}
+	return (p);
+}
+
+int ft_strcmp(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i] && s2[i] && s1[i] == s2[i] )
+		i++;
+	return(s1[i] - s2[i]);
+}
+
+char	*get_path(char **envp)
+{
+	while (*envp)
+	{
+		if (ft_strcmp(*envp, "PATH=") == 0)
+			return(*envp + 5);
+		envp++;
+	}
+	return(NULL);
+}
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	size_t	i;
+	char	*p;
+	int		j;
+
+	if (!s1 && !s2)
+		return (NULL);
+	if (!s1 && s2)
+		return (ft_strdup(s2));
+	if (s1 && !s2)
+		return (ft_strdup(s1));
+	i = ft_strlen(s1) + ft_strlen(s2);
+	p = ft_calloc(i + 1, sizeof(char));
+	if (!p)
+		return (NULL);
+	i = -1;
+	j = -1;
+	while (s1[++i])
+		p[i] = s1[i];
+	while (s2[++j])
+		p[i++] = s2[j];
 	return (p);
 }
