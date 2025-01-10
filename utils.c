@@ -6,7 +6,7 @@
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 17:43:50 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/09 16:12:18 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/10 15:41:54 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	ft_bzero(void *s, size_t len)
 	ft_memset(s, '\0', len);
 }
 
-
 void	*ft_memset(void *ptr, int value, size_t num)
 {
 	unsigned char	*p;
@@ -46,21 +45,29 @@ void	*ft_memset(void *ptr, int value, size_t num)
 	return (p);
 }
 
-int ft_strcmp(char *s1, char *s2)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
-	while (s1[i] && s2[i] && s1[i] == s2[i] )
+	if (n == 0)
+		return (0);
+	while (s1[i] && s2[i] && i < n)
+	{
+		if (s1[i] != s2[i])
+			return ((unsigned char )s1[i] - (unsigned char)s2[i]);
 		i++;
-	return(s1[i] - s2[i]);
+	}
+	if (i != n)
+		return ((unsigned char )s1[i] - (unsigned char)s2[i]);
+	return (0);
 }
 
 char	*get_path(char **envp)
 {
 	while (*envp)
 	{
-		if (ft_strcmp(*envp, "PATH=") == 0)
+		if (ft_strncmp(*envp, "PATH=", 5) == 0)
 			return(*envp + 5);
 		envp++;
 	}
