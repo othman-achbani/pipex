@@ -6,7 +6,7 @@
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 19:32:30 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/11 14:39:44 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/11 20:51:14 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ int	main(int ac, char **av, char **env)
 	int		pipefd[2];
 	int		i;
 	pid_t	pid;
+	pid_t	spid;
 
 	if (ac != 5)
 		return (write(2, "syntax erreur try : file1 \
@@ -103,6 +104,8 @@ cmd1 cmd2 file2 \n", 44), 1);
 	pid = fork();
 	if (pid == 0)
 		child_cmd1(pipefd, av, env);
-	else
+	spid = fork();
+	if (spid == 0)
 		second_cmd(pipefd, av, env);
+	wait (NULL);
 }
