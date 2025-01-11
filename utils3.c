@@ -6,7 +6,7 @@
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 17:20:42 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/10 23:44:08 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/11 13:06:32 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-
 void	ft_checknull(char **av)
 {
 	if (!*av[2] && !*av[3])
@@ -56,7 +55,7 @@ void	ft_checknull(char **av)
 		ft_putstr_fd("command not found : \n", 2);
 		exit(1);
 	}
-	if (!check_spaces)
+	if (!check_spaces(2, ++av))
 	{
 		ft_putstr_fd("command not found : \n", 2);
 		exit(1);
