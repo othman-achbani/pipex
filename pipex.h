@@ -6,7 +6,7 @@
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 19:38:08 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/11 14:25:31 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/12 11:12:57 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	*ft_memset(void *ptr, int value, size_t num);
 char	**ft_split(char const *s, char c);
 char	*get_path(char **envp);
 char	*ft_strjoin(char const *s1, char const *s2);
-char	*ft_checkfirst(char *str, char *path);
+char	*ft_checkfirst(char *str);
 void	ft_writefree(char *str, char **spl, char *path);
 int		check_spaces(int ac, char **av);
 

@@ -6,7 +6,7 @@
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 19:32:30 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/11 20:51:14 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/12 11:32:04 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,22 @@ char	*ft_check(char *str, char *path)
 {
 	char	**parse;
 	char	*s;
+	int		i;
 
+	i = 0 ;
 	parse = ft_split(path, ':');
 	if (!parse)
 		return (NULL);
 	str = ft_strjoin("/", str);
-	while (*parse)
+	while (parse[i])
 	{
-		s = ft_strjoin(*parse, str);
+		s = ft_strjoin(parse[i], str);
 		if (access(s, X_OK) == 0)
 			return (s);
-		parse++;
+		free(s);
+		i++;
 	}
+	ft_free(parse);
 	return (free(str), NULL);
 }
 
@@ -47,10 +51,10 @@ void	child_cmd1(int *pipefd, char **av, char **env)
 	}
 	path = get_path(env);
 	str = ft_split(av[2], ' ');
-	if (!ft_checkfirst(str[0], path))
+	if (!ft_checkfirst(str[0]))
 		exe = ft_check(str[0], path);
 	else
-		exe = ft_checkfirst(str[0], path);
+		exe = ft_checkfirst(str[0]);
 	if (!exe)
 		ft_writefree("command not found\n", str, exe);
 	else if (dup2(pipefd[1], 1) == -1 || dup2(infd, 0) == -1)
@@ -75,10 +79,10 @@ void	second_cmd(int *pipefd, char **av, char **env)
 	}
 	path = get_path(env);
 	str = ft_split(av[3], ' ');
-	if (!ft_checkfirst(str[0], path))
+	if (!ft_checkfirst(str[0]))
 		exe = ft_check(str[0], path);
 	else
-		exe = ft_checkfirst(str[0], path);
+		exe = ft_checkfirst(str[0]);
 	if (!exe)
 		ft_writefree("command not found\n", str, exe);
 	if (dup2(pipefd[1], 1) == -1 || dup2(pipefd[0], 0) == -1)
