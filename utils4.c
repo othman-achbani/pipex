@@ -6,7 +6,7 @@
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 17:34:23 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/12 11:20:53 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/13 18:00:59 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,16 @@ void	ft_writefree(char *str, char **spl, char *exe)
 	exit(1);
 }
 
-int	check_spaces(int ac, char **av)
+int	check_spaces(char *av)
 {
 	int	i;
 	int	j;
 
-	j = 0;
 	i = 0;
-	while (++i < ac)
-	{
-		j = 0;
-		while (av[i][j] == ' ')
-			j++;
-		if (!av[i][j])
-			return (0);
-	}
+	while (av[i] == ' ')
+		i++;
+	if (!av[i])
+		return (0);
 	return (1);
 }
 
@@ -69,3 +64,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		p[i++] = s2[j];
 	return (p);
 }
+// void	error_handler(int pid, int spid, char *cmd, char *cmd2)
+// {
+	// 
+// }

@@ -6,7 +6,7 @@
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 19:38:08 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/12 11:12:57 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/13 17:09:31 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@ char	*get_path(char **envp);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_checkfirst(char *str);
 void	ft_writefree(char *str, char **spl, char *path);
-int		check_spaces(int ac, char **av);
+int		check_spaces(char *av);
 
 #endif

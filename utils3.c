@@ -6,7 +6,7 @@
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 17:20:42 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/11 13:06:32 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/13 17:10:50 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,27 +39,24 @@ size_t	ft_strlen(const char *s)
 
 void	ft_checknull(char **av)
 {
-	if (!*av[2] && !*av[3])
+	if ((!*av[2] && !*av[3]) ||(!check_spaces(av[2]) \
+&& !check_spaces(av[3])) )
 	{
 		ft_putstr_fd("command not found : \n", 2);
 		ft_putstr_fd("command not found : ", 2);
 		exit(1);
 	}
-	if (!*av[2])
+	if (!av[2] || !av[3])
 	{
 		ft_putstr_fd("command not found : \n", 2);
 		exit(1);
 	}
-	if (!*av[3])
+	if (!check_spaces(av[2]) || !check_spaces(av[3]))
 	{
 		ft_putstr_fd("command not found : \n", 2);
 		exit(1);
 	}
-	if (!check_spaces(2, ++av))
-	{
-		ft_putstr_fd("command not found : \n", 2);
-		exit(1);
-	}
+	
 }
 
 void	ft_putstr_fd(char *s, int fd)

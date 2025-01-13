@@ -6,7 +6,7 @@
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 19:32:30 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/12 11:32:04 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/13 17:48:50 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	child_cmd1(int *pipefd, char **av, char **env)
 	infd = open(av[1], O_RDONLY);
 	if (infd == -1)
 	{
-		ft_putstr_fd("no file \n", 2);
+		ft_putstr_fd("no such file or directory \n", 2);
 		exit(0);
 	}
 	path = get_path(env);
@@ -56,7 +56,7 @@ void	child_cmd1(int *pipefd, char **av, char **env)
 	else
 		exe = ft_checkfirst(str[0]);
 	if (!exe)
-		ft_writefree("command not found\n", str, exe);
+		ft_writefree("", str, exe);
 	else if (dup2(pipefd[1], 1) == -1 || dup2(infd, 0) == -1)
 		ft_writefree("error while redirecting the file \n", str, exe);
 	execve(exe, str, env);
@@ -84,7 +84,7 @@ void	second_cmd(int *pipefd, char **av, char **env)
 	else
 		exe = ft_checkfirst(str[0]);
 	if (!exe)
-		ft_writefree("command not found\n", str, exe);
+		ft_writefree("", str, exe);
 	if (dup2(pipefd[1], 1) == -1 || dup2(pipefd[0], 0) == -1)
 		ft_writefree("error while redirecting the file \n", str, exe);
 	execve(exe, str, env);
@@ -97,6 +97,7 @@ int	main(int ac, char **av, char **env)
 	int		i;
 	pid_t	pid;
 	pid_t	spid;
+	int		exit;
 
 	if (ac != 5)
 		return (write(2, "syntax erreur try : file1 \
@@ -111,5 +112,8 @@ cmd1 cmd2 file2 \n", 44), 1);
 	spid = fork();
 	if (spid == 0)
 		second_cmd(pipefd, av, env);
-	wait (NULL);
+	waitpid(pid, &i, 0);
+	waitpid(spid, &exit, 0);
+	printf("pid = %d || spid = %d", i , exit);
+	// error_handler(pid, spid, av[2], av[3]);
 }
