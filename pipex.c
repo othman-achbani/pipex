@@ -6,7 +6,7 @@
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 19:32:30 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/14 18:23:05 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/14 19:32:25 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ void	child_cmd1(int *pipefd, char **av, char **env)
 		exe = ft_check(str[0], path);
 	else
 		exe = ft_checkfirst(str[0]);
-	if (!exe)
-		ft_writefree("", str, exe);
-	else if (dup2(pipefd[1], 1) == -1 || dup2(infd, 0) == -1)
+	if (!exe && !path)
+		ft_writefreecmd("", str);
+	if (dup2(pipefd[1], 1) == -1 || dup2(infd, 0) == -1)
 		ft_writefree("error while redirecting the file \n", str, exe);
 	execve(exe, str, env);
 	ft_writefreecmd("", str);

@@ -6,7 +6,7 @@
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 12:14:06 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/10 11:46:00 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/14 19:32:44 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ void	ft_free(char **tab)
 {
 	int	i;
 
+	if (!tab)
+		return ;
 	i = -1;
 	while (tab[++i])
 		free(tab[i]);
