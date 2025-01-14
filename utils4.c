@@ -6,7 +6,7 @@
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 17:34:23 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/13 22:52:10 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/14 09:43:34 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 }
 void	error_handler(int pid, int spid, char *cmd, char *cmd2)
 {
-	if (pid == 32512 && spid == 32512)
+	if (pid == 256 && spid == 256)
 	{
 		ft_putstr_fd("command not found : ", 2);
 		ft_putstr_fd(cmd, 2);
@@ -75,13 +75,13 @@ void	error_handler(int pid, int spid, char *cmd, char *cmd2)
 		ft_putstr_fd(cmd2, 2);
 		return (ft_putstr_fd("\n", 2), exit(127));
 	}
-	if (pid == 32512)
+	if (pid == 256)
 	{
 		ft_putstr_fd("command not found : ", 2);
 		ft_putstr_fd(cmd, 2);
 		ft_putchar_fd('\n', 2);
 	}
-	else if (spid == 32512)
+	else if (spid == 256)
 	{
 		ft_putstr_fd("command not found : ", 2);
 		ft_putstr_fd(cmd2, 2);
