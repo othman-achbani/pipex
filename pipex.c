@@ -6,7 +6,7 @@
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 19:32:30 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/14 18:00:56 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/14 18:23:05 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,20 +106,20 @@ int	main(int ac, char **av, char **env)
 	if (ac != 5)
 		return (write(2, "syntax erreur try : file1 \
 cmd1 cmd2 file2 \n", 44), 1);
-	i = pipe(pipefd);
-	if (i == -1)
+	if (pipe(pipefd) == -1)
 		ft_writefree("error while redirecting the file \n", av, "h");
 	ft_checknull(av, av[2], av[3]);
 	pid = fork();
-	if (pid == 0 )
+	if (pid == 0)
 		child_cmd1(pipefd, av, env);
 	spid = fork();
 	if (spid == 0)
 		second_cmd(pipefd, av, env);
 	close(pipefd[0]);
 	close(pipefd[1]);
+	if (pid == -1 || spid == -1)
+		ft_writefree("the fork just failed \n", av, "h");
 	waitpid(pid, &i, 0);
-	waitpid(spid, &exit, 0);
-	
+	waitpid(spid, &exit, 0);	
 	error_handler(i, exit, av[2], av[3]);
 }
