@@ -6,7 +6,7 @@
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 17:34:23 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/14 09:43:34 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/14 11:49:09 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		p[i++] = s2[j];
 	return (p);
 }
+
 void	error_handler(int pid, int spid, char *cmd, char *cmd2)
 {
 	if (pid == 256 && spid == 256)
@@ -89,5 +90,4 @@ void	error_handler(int pid, int spid, char *cmd, char *cmd2)
 	}
 	else if (spid || pid)
 		exit (EXIT_FAILURE);
-	// exit(0);
 }
