@@ -6,7 +6,7 @@
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 19:38:08 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/13 19:06:41 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/14 17:32:35 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <stdint.h>
 # include <stddef.h>
 
-void	ft_writefreecmd(char *str, char **spl, char *exe);
+void	ft_writefreecmd(char *str, char **spl);
 void	ft_free(char **tab);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	ft_putchar_fd(char c, int fd);

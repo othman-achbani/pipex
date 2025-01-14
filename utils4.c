@@ -6,7 +6,7 @@
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 17:34:23 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/14 11:49:09 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/14 17:57:12 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_writefree(char *str, char **spl, char *exe)
 	ft_putstr_fd(str, 2);
 	ft_free(spl);
 	free(exe);
-	exit(1);
+	exit(127);
 }
 
 int	check_spaces(char *av)
@@ -67,27 +67,19 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 void	error_handler(int pid, int spid, char *cmd, char *cmd2)
 {
-	if (pid == 256 && spid == 256)
-	{
-		ft_putstr_fd("command not found : ", 2);
-		ft_putstr_fd(cmd, 2);
-		ft_putstr_fd("\n", 2);
-		ft_putstr_fd("command not found : ", 2);
-		ft_putstr_fd(cmd2, 2);
-		return (ft_putstr_fd("\n", 2), exit(127));
-	}
-	if (pid == 256)
+	
+	if (WEXITSTATUS(pid) == 127)
 	{
 		ft_putstr_fd("command not found : ", 2);
 		ft_putstr_fd(cmd, 2);
 		ft_putchar_fd('\n', 2);
 	}
-	else if (spid == 256)
+	if (WEXITSTATUS(spid) == 127)
 	{
 		ft_putstr_fd("command not found : ", 2);
 		ft_putstr_fd(cmd2, 2);
 		return (ft_putchar_fd('\n', 2), exit(127));
 	}
-	else if (spid || pid)
+	else if (WEXITSTATUS(spid))
 		exit (EXIT_FAILURE);
 }

@@ -6,7 +6,7 @@
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 19:32:30 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/14 09:45:50 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/14 18:00:56 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,26 @@ char	*ft_check(char *str, char *path)
 	char	**parse;
 	char	*s;
 	int		i;
+	char	*nstr;
 
 	i = 0 ;
 	parse = ft_split(path, ':');
-	if (!parse || str[0] == '/')
+	if (!parse || str[0] == '/' || str[0] == '.')
+	{
+		ft_free(parse);
 		return (NULL);
-	str = ft_strjoin("/", str);
+	}	
+	nstr = ft_strjoin("/", str);
 	while (parse[i])
 	{
-		s = ft_strjoin(parse[i], str);
+		s = ft_strjoin(parse[i], nstr);
 		if (access(s, X_OK) == 0)
 			return (s);
 		free(s);
 		i++;
 	}
 	ft_free(parse);
-	return (free(str), NULL);
+	return (free(nstr), NULL);
 }
 
 void	child_cmd1(int *pipefd, char **av, char **env)
@@ -60,7 +64,7 @@ void	child_cmd1(int *pipefd, char **av, char **env)
 	else if (dup2(pipefd[1], 1) == -1 || dup2(infd, 0) == -1)
 		ft_writefree("error while redirecting the file \n", str, exe);
 	execve(exe, str, env);
-	ft_writefreecmd("error executing the command", str, exe);
+	ft_writefreecmd("", str);
 }
 
 void	second_cmd(int *pipefd, char **av, char **env)
@@ -88,7 +92,7 @@ void	second_cmd(int *pipefd, char **av, char **env)
 	if (dup2(pipefd[1], 1) == -1 || dup2(pipefd[0], 0) == -1)
 		ft_writefree("error while redirecting the file \n", str, exe);
 	execve(exe, str, env);
-	ft_writefreecmd("error executing the command", str, exe);
+	ft_writefreecmd("", str);
 }
 
 int	main(int ac, char **av, char **env)
@@ -107,14 +111,15 @@ cmd1 cmd2 file2 \n", 44), 1);
 		ft_writefree("error while redirecting the file \n", av, "h");
 	ft_checknull(av, av[2], av[3]);
 	pid = fork();
-	if (pid == 0 && av[2][0] != '.')
+	if (pid == 0 )
 		child_cmd1(pipefd, av, env);
 	spid = fork();
-	if (spid == 0 && av[3][0] != '.')
+	if (spid == 0)
 		second_cmd(pipefd, av, env);
 	close(pipefd[0]);
 	close(pipefd[1]);
 	waitpid(pid, &i, 0);
 	waitpid(spid, &exit, 0);
+	
 	error_handler(i, exit, av[2], av[3]);
 }
