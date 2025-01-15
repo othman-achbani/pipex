@@ -6,7 +6,7 @@
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 19:32:30 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/14 19:32:25 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/15 10:52:37 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ void	child_cmd1(int *pipefd, char **av, char **env)
 		exe = ft_check(str[0], path);
 	else
 		exe = ft_checkfirst(str[0]);
-	if (!exe && !path)
+	if (!exe)
 		ft_writefreecmd("", str);
 	if (dup2(pipefd[1], 1) == -1 || dup2(infd, 0) == -1)
-		ft_writefree("error while redirecting the file \n", str, exe);
-	execve(exe, str, env);
+		ft_writefreecmd("error while redirecting the file", str);
+	execve(exe, str, env);  
 	ft_writefreecmd("", str);
 }
 
@@ -89,8 +89,8 @@ void	second_cmd(int *pipefd, char **av, char **env)
 		exe = ft_checkfirst(str[0]);
 	if (!exe)
 		ft_writefree("", str, exe);
-	if (dup2(pipefd[1], 1) == -1 || dup2(pipefd[0], 0) == -1)
-		ft_writefree("error while redirecting the file \n", str, exe);
+	if (dup2(oufd, 1) == -1 || dup2(pipefd[0], 0) == -1)
+		ft_writefreecmd("error while redirecting the file", str);
 	execve(exe, str, env);
 	ft_writefreecmd("", str);
 }
@@ -107,7 +107,7 @@ int	main(int ac, char **av, char **env)
 		return (write(2, "syntax erreur try : file1 \
 cmd1 cmd2 file2 \n", 44), 1);
 	if (pipe(pipefd) == -1)
-		ft_writefree("error while redirecting the file \n", av, "h");
+		ft_writefree("error while opening the pipe \n", av, "h");
 	ft_checknull(av, av[2], av[3]);
 	pid = fork();
 	if (pid == 0)
