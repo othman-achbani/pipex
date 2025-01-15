@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 19:32:30 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/15 20:33:12 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/15 20:21:50 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,13 @@ void	child_cmd1(int *pipefd, char **av, char **env)
 	char	*exe;
 	int		infd;
 
-	close(pipefd[0]);
 	infd = open(av[1], O_RDONLY);
 	if (infd == -1)
-	return(ft_putstr_fd("no such file or directory \n", 2), exit(1));
-	ft_checknull(av[2]);
+	{
+		ft_putstr_fd("no such file or directory \n", 2);
+		exit(0);
+	}
+	if (!*av[)
 	path = get_path(env);
 	str = ft_split(av[2], ' ');
 	if (!ft_checkfirst(str[0]))
@@ -59,8 +61,6 @@ void	child_cmd1(int *pipefd, char **av, char **env)
 		exe = ft_checkfirst(str[0]);
 	if (!exe)
 		ft_writefreecmd("", str);
-	if (dup2(pipefd[1], 1) == -1 || dup2(infd, 0) == -1)
-		ft_writefreecmd("error while redirecting the file", str);
 	execve(exe, str, env);
 	ft_writefreecmd("", str);
 }
@@ -75,16 +75,18 @@ void	second_cmd(int *pipefd, char **av, char **env)
 	close(pipefd[1]);
 	oufd = open(av[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (oufd == -1)
-		return(ft_putstr_fd("can't create output file \n", 2), exit(1));
-	ft_checknull(av[3]);
+	{
+		ft_putstr_fd("can't create output file \n", 2);
+		exit(1);
+	}
 	path = get_path(env);
 	str = ft_split(av[3], ' ');
-	if (!ft_checkfirst(str[0]))
-		exe = ft_check(str[0], path);
-	else
-		exe = ft_checkfirst(str[0]);
+	// if (!ft_checkfirst(str[0]))
+	// 	exe = ft_check(str[0], path);
+	// else
+	// 	exe = ft_checkfirst(str[0]);
 	if (!exe)
-		ft_writefreecmd("", str);
+		ft_writefree("", str, exe);
 	if (dup2(oufd, 1) == -1 || dup2(pipefd[0], 0) == -1)
 		ft_writefreecmd("error while redirecting the file", str);
 	execve(exe, str, env);
@@ -99,22 +101,15 @@ int	main(int ac, char **av, char **env)
 	pid_t	spid;
 	int		exit;
 
-	if (ac != 5)
+	if (ac < 5)
 		return (write(2, "syntax erreur try : file1 \
-cmd1 cmd2 file2 \n", 44), 1);
-	if (pipe(pipefd) == -1)
-		ft_writefree("error while opening the pipe \n", av, "h");
+cmd1 cmd2 ...cmdn file2 \n", 44), 1);
+	ft_checknull(av, av[2], av[3]);
 	pid = fork();
 	if (pid == 0)
-		child_cmd1(pipefd, av, env);
-	spid = fork();
-	if (spid == 0)
-		second_cmd(pipefd, av, env);
-	close(pipefd[0]);
-	close(pipefd[1]);
+		child_cmd1(ac, av, env);
 	if (pid == -1 || spid == -1)
 		ft_writefree("the fork just failed \n", av, "h");
 	waitpid(pid, &i, 0);
-	waitpid(spid, &exit, 0);	
-	error_handler(i, exit, av[2], av[3]);
+	// error_handler(i, exit, av[2], av[3]);
 }
