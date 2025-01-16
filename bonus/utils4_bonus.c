@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils4.c                                           :+:      :+:    :+:   */
+/*   utils4_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 17:34:23 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/14 17:57:12 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/16 01:35:30 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 char	*ft_checkfirst(char *str)
 {
@@ -19,11 +19,11 @@ char	*ft_checkfirst(char *str)
 	return (NULL);
 }
 
-void	ft_writefree(char *str, char **spl, char *exe)
+void	ft_writefree(char *str, char **spl)
 {
 	ft_putstr_fd(str, 2);
+	ft_putstr_fd(spl[0], 2);
 	ft_free(spl);
-	free(exe);
 	exit(127);
 }
 

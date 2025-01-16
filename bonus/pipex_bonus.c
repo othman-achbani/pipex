@@ -6,11 +6,11 @@
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 19:32:30 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/15 20:21:50 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/16 01:34:12 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 char	*ft_check(char *str, char *path)
 {
@@ -39,77 +39,75 @@ char	*ft_check(char *str, char *path)
 	return (free(nstr), NULL);
 }
 
-void	child_cmd1(int *pipefd, char **av, char **env)
+void	child_cmd1(char *av, char **env)
 {
 	char	**str;
 	char	*path;
 	char	*exe;
-	int		infd;
 
-	infd = open(av[1], O_RDONLY);
-	if (infd == -1)
-	{
-		ft_putstr_fd("no such file or directory \n", 2);
-		exit(0);
-	}
-	if (!*av[)
+	ft_checknull(av);
 	path = get_path(env);
-	str = ft_split(av[2], ' ');
+	str = ft_split(av, ' ');
 	if (!ft_checkfirst(str[0]))
 		exe = ft_check(str[0], path);
 	else
 		exe = ft_checkfirst(str[0]);
 	if (!exe)
-		ft_writefreecmd("", str);
+		ft_writefree("command not found",str);
 	execve(exe, str, env);
 	ft_writefreecmd("", str);
 }
 
-void	second_cmd(int *pipefd, char **av, char **env)
+void	execute_cmd(char *str, char **env)
 {
-	char	**str;
-	char	*path;
-	char	*exe;
-	int		oufd;
+	int		pipefd[2];
+	pid_t	i;
 
-	close(pipefd[1]);
-	oufd = open(av[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
-	if (oufd == -1)
+	if (pipe(pipefd) == -1)
+		error(1);
+	i = fork();
+	if (i == -1)
+		error(1);
+	if (i == 0)
 	{
-		ft_putstr_fd("can't create output file \n", 2);
-		exit(1);
+		close(pipefd[0]);
+		if (dup2(pipefd[1], 1) == -1)
+			perror("dup2 just failed");
+		child_cmd1(str, env);
 	}
-	path = get_path(env);
-	str = ft_split(av[3], ' ');
-	// if (!ft_checkfirst(str[0]))
-	// 	exe = ft_check(str[0], path);
-	// else
-	// 	exe = ft_checkfirst(str[0]);
-	if (!exe)
-		ft_writefree("", str, exe);
-	if (dup2(oufd, 1) == -1 || dup2(pipefd[0], 0) == -1)
-		ft_writefreecmd("error while redirecting the file", str);
-	execve(exe, str, env);
-	ft_writefreecmd("", str);
+	else
+	{
+		close(pipefd[1]);
+		if (dup2(pipefd[0], 0) == -1)
+			perror("dup2 just failed");
+		wait(NULL);
+	}
 }
 
 int	main(int ac, char **av, char **env)
 {
-	int		pipefd[2];
+	int		inf_or_outf[2];
 	int		i;
-	pid_t	pid;
-	pid_t	spid;
 	int		exit;
 
-	if (ac < 5)
-		return (write(2, "syntax erreur try : file1 \
-cmd1 cmd2 ...cmdn file2 \n", 44), 1);
-	ft_checknull(av, av[2], av[3]);
-	pid = fork();
-	if (pid == 0)
-		child_cmd1(ac, av, env);
-	if (pid == -1 || spid == -1)
-		ft_writefree("the fork just failed \n", av, "h");
-	waitpid(pid, &i, 0);
-	// error_handler(i, exit, av[2], av[3]);
+	if (ac >= 5)
+	{
+		if (ft_strncmp("here_doc", av[1], 8) == 0 )
+		{
+			i = 3;
+		}
+		else
+		{
+			i = 2;
+			inf_or_outf[0] = get_fd(av[1] , 0);
+			inf_or_outf[1] = get_fd(av[ac - 1], 1);
+			dup2(inf_or_outf[0], 0);
+		}
+		while (i < ac - 2)
+			execute_cmd(av[i++], env);
+		dup2(inf_or_outf[1], 1);
+			child_cmd1(av[ac - 2], env);
+	}
+	// else
+	// ft_putstr_fd("")
 }

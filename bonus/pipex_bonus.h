@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 19:38:08 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/14 17:32:35 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/16 01:35:08 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef PIPEX_BONUS_H
+# define PIPEX_BONUS_H
 
 # include <unistd.h>
 # include <stdio.h>
@@ -35,9 +35,11 @@ char	**ft_split(char const *s, char c);
 char	*get_path(char **envp);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_checkfirst(char *str);
-void	ft_writefree(char *str, char **spl, char *path);
+void	ft_writefree(char *str, char **spl);
 int		check_spaces(char *av);
 void	error_handler(int pid, int spid, char *cmd, char *cmd2);
-void	ft_checknull(char **av, char *cmd, char *cmd2);
+void	ft_checknull(char *cmd);
+int		get_fd(char *av, int i);
+void	error(int i);
 
 #endif

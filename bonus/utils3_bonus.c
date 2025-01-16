@@ -6,11 +6,11 @@
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 17:20:42 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/15 15:56:57 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/16 00:03:04 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 char	*ft_strdup(const char *s)
 {
@@ -37,30 +37,10 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-void	ft_checknull(char **av, char *cmd, char *cmd2)
+void	ft_checknull(char *cmd)
 {
-	if ((!*av[2] && !*av[3])) 
-	// || (!check_spaces(av[2]) \
-	// && !check_spaces(av[3])))
-	{
-		ft_putstr_fd("command not found : ", 2);
-		ft_putstr_fd(cmd, 2);
-		ft_putchar_fd('\n', 2);
-		ft_putstr_fd("command not found : ", 2);
-		ft_putstr_fd(cmd2, 2);
-		return (ft_putchar_fd('\n', 2), exit(127));
-	}
-	if (!av[2])
-		return (ft_putstr_fd("command not found : ", 2), \
-ft_putchar_fd('\n', 2), ft_putstr_fd(cmd, 2), exit(127));
-	if (!av[3])
-		return (ft_putstr_fd("command not found : ", 2), \
-ft_putchar_fd('\n', 2), ft_putstr_fd(cmd2, 2), exit(127));
-	// if (!check_spaces(av[2]) || !check_spaces(av[3]))
-	// {
-	// 	ft_putstr_fd("command not found : \n", 2);
-	// 	exit(127);
-	// }
+	if (!cmd || !check_spaces(cmd))
+		exit(127);
 }
 
 void	ft_putstr_fd(char *s, int fd)
