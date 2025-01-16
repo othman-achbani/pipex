@@ -6,7 +6,7 @@
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 19:32:30 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/16 01:34:12 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/16 12:37:46 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_check(char *str, char *path)
 
 	i = 0 ;
 	parse = ft_split(path, ':');
-	if (!parse || str[0] == '/' || str[0] == '.')
+	if (!parse || str[0] == '/' || str[0] == '.' || !str[0])
 	{
 		ft_free(parse);
 		return (NULL);
@@ -45,17 +45,18 @@ void	child_cmd1(char *av, char **env)
 	char	*path;
 	char	*exe;
 
-	ft_checknull(av);
 	path = get_path(env);
 	str = ft_split(av, ' ');
+	if (!ft_checknull(av))
+		empty_or_space("command not found : ", str);
 	if (!ft_checkfirst(str[0]))
 		exe = ft_check(str[0], path);
 	else
 		exe = ft_checkfirst(str[0]);
 	if (!exe)
-		ft_writefree("command not found",str);
+		ft_writefree("command not found : ",str);
 	execve(exe, str, env);
-	ft_writefreecmd("", str);
+	ft_writefree("i can't execute this command :",str);
 }
 
 void	execute_cmd(char *str, char **env)
@@ -88,13 +89,14 @@ int	main(int ac, char **av, char **env)
 {
 	int		inf_or_outf[2];
 	int		i;
-	int		exit;
 
 	if (ac >= 5)
 	{
 		if (ft_strncmp("here_doc", av[1], 8) == 0 )
 		{
 			i = 3;
+			
+			
 		}
 		else
 		{
@@ -108,6 +110,6 @@ int	main(int ac, char **av, char **env)
 		dup2(inf_or_outf[1], 1);
 			child_cmd1(av[ac - 2], env);
 	}
-	// else
-	// ft_putstr_fd("")
+	else
+		return(ft_putstr_fd("syntax error try file1 cmd1 cmd2 ... cmdn file2", 2), 1);
 }

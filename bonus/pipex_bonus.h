@@ -6,7 +6,7 @@
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 19:38:08 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/16 01:35:08 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/16 12:32:40 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ char	*ft_checkfirst(char *str);
 void	ft_writefree(char *str, char **spl);
 int		check_spaces(char *av);
 void	error_handler(int pid, int spid, char *cmd, char *cmd2);
-void	ft_checknull(char *cmd);
+int		ft_checknull(char *cmd);
 int		get_fd(char *av, int i);
 void	error(int i);
-
+void	empty_or_space(char *str, char **spl);
 #endif

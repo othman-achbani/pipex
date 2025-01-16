@@ -6,7 +6,7 @@
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 17:20:42 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/16 00:03:04 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/16 12:36:31 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,11 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-void	ft_checknull(char *cmd)
+int	ft_checknull(char *cmd)
 {
 	if (!cmd || !check_spaces(cmd))
-		exit(127);
+		return(0);
+	return(1);
 }
 
 void	ft_putstr_fd(char *s, int fd)
