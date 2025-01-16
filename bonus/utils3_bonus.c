@@ -6,7 +6,7 @@
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 17:20:42 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/16 12:36:31 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/16 16:53:02 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,7 @@ int	ft_checknull(char *cmd)
 
 void	ft_putstr_fd(char *s, int fd)
 {
-	int	i;
-
 	if (!s)
 		return ;
-	i = -1;
-	while (s[++i])
-		ft_putchar_fd(s[i], fd);
+	write(fd, s, ft_strlen(s));
 }

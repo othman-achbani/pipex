@@ -6,7 +6,7 @@
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 19:32:30 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/16 12:37:46 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/16 16:54:54 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	child_cmd1(char *av, char **env)
 	ft_writefree("i can't execute this command :",str);
 }
 
-void	execute_cmd(char *str, char **env)
+void	execute_cmd(char *file, char *str, char **env)
 {
 	int		pipefd[2];
 	pid_t	i;
@@ -81,6 +81,8 @@ void	execute_cmd(char *str, char **env)
 		close(pipefd[1]);
 		if (dup2(pipefd[0], 0) == -1)
 			perror("dup2 just failed");
+		if (ft_strncmp("/dev/urandom" , file , 12) != 0 && \
+	 ft_strncmp("/dev/stdin", file ,11) != 0)
 		wait(NULL);
 	}
 }
@@ -106,7 +108,7 @@ int	main(int ac, char **av, char **env)
 			dup2(inf_or_outf[0], 0);
 		}
 		while (i < ac - 2)
-			execute_cmd(av[i++], env);
+			execute_cmd(av[1], av[i++], env);
 		dup2(inf_or_outf[1], 1);
 			child_cmd1(av[ac - 2], env);
 	}
