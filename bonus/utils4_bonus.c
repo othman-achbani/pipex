@@ -6,7 +6,7 @@
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 17:34:23 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/16 12:47:31 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/16 18:43:29 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	check_spaces(char *av)
 	return (1);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	size_t	i;
 	char	*p;

@@ -6,7 +6,7 @@
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 19:32:30 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/15 20:33:12 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/16 17:13:03 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*ft_check(char *str, char *path)
 	{
 		ft_free(parse);
 		return (NULL);
-	}	
+	}
 	nstr = ft_strjoin("/", str);
 	while (parse[i])
 	{
@@ -49,7 +49,7 @@ void	child_cmd1(int *pipefd, char **av, char **env)
 	close(pipefd[0]);
 	infd = open(av[1], O_RDONLY);
 	if (infd == -1)
-	return(ft_putstr_fd("no such file or directory \n", 2), exit(1));
+		return (ft_putstr_fd("no such file or directory \n", 2), exit(1));
 	ft_checknull(av[2]);
 	path = get_path(env);
 	str = ft_split(av[2], ' ');
@@ -75,7 +75,7 @@ void	second_cmd(int *pipefd, char **av, char **env)
 	close(pipefd[1]);
 	oufd = open(av[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (oufd == -1)
-		return(ft_putstr_fd("can't create output file \n", 2), exit(1));
+		return (ft_putstr_fd("can't create output file \n", 2), exit(1));
 	ft_checknull(av[3]);
 	path = get_path(env);
 	str = ft_split(av[3], ' ');
@@ -115,6 +115,6 @@ cmd1 cmd2 file2 \n", 44), 1);
 	if (pid == -1 || spid == -1)
 		ft_writefree("the fork just failed \n", av, "h");
 	waitpid(pid, &i, 0);
-	waitpid(spid, &exit, 0);	
+	waitpid(spid, &exit, 0);
 	error_handler(i, exit, av[2], av[3]);
 }

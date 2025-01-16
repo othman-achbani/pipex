@@ -6,7 +6,7 @@
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 17:34:23 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/14 17:57:12 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/16 17:13:13 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 void	error_handler(int pid, int spid, char *cmd, char *cmd2)
 {
-	
 	if (WEXITSTATUS(pid) == 127)
 	{
 		ft_putstr_fd("command not found : ", 2);

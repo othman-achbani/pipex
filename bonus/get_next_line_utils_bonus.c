@@ -1,52 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils3_bonus.c                                     :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/09 17:20:42 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/16 18:43:51 by oachbani         ###   ########.fr       */
+/*   Created: 2024/11/22 14:39:17 by oachbani          #+#    #+#             */
+/*   Updated: 2025/01/16 18:48:21 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-char	*ft_strdup(char *s)
+char	*ft_strchr(char *str, int c)
 {
-	size_t	i;
-	char	*p;
+	int	i;
 
-	i = ft_strlen(s);
-	p = (char *)ft_calloc(i + 1, sizeof(char));
-	if (!p)
+	if (!str)
 		return (NULL);
 	i = -1;
-	while (s[++i])
-		p[i] = s[i];
-	return (p);
-}
-
-size_t	ft_strlen(char *s)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
-
-int	ft_checknull(char *cmd)
-{
-	if (!cmd || !check_spaces(cmd))
-		return (0);
-	return (1);
-}
-
-void	ft_putstr_fd(char *s, int fd)
-{
-	if (!s)
-		return ;
-	write(fd, s, ft_strlen(s));
+	while (str[++i])
+		if (str[i] == (char)c)
+			return ((char *)&str[i]);
+	if (str[i] == (char)c)
+		return ((char *)&str[i]);
+	return (NULL);
 }

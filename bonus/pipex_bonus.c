@@ -6,7 +6,7 @@
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 19:32:30 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/16 16:54:54 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/16 22:25:34 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*ft_check(char *str, char *path)
 	{
 		ft_free(parse);
 		return (NULL);
-	}	
+	}
 	nstr = ft_strjoin("/", str);
 	while (parse[i])
 	{
@@ -54,9 +54,9 @@ void	child_cmd1(char *av, char **env)
 	else
 		exe = ft_checkfirst(str[0]);
 	if (!exe)
-		ft_writefree("command not found : ",str);
+		ft_writefree("command not found : ", str);
 	execve(exe, str, env);
-	ft_writefree("i can't execute this command :",str);
+	ft_writefree("i can't execute this command :", str);
 }
 
 void	execute_cmd(char *file, char *str, char **env)
@@ -81,8 +81,6 @@ void	execute_cmd(char *file, char *str, char **env)
 		close(pipefd[1]);
 		if (dup2(pipefd[0], 0) == -1)
 			perror("dup2 just failed");
-		if (ft_strncmp("/dev/urandom" , file , 12) != 0 && \
-	 ft_strncmp("/dev/stdin", file ,11) != 0)
 		wait(NULL);
 	}
 }
@@ -94,24 +92,24 @@ int	main(int ac, char **av, char **env)
 
 	if (ac >= 5)
 	{
-		if (ft_strncmp("here_doc", av[1], 8) == 0 )
+		if (ft_strncmp("here_doc", av[1], 8) == 0)
 		{
 			i = 3;
-			
-			
+			inf_or_outf[0] = ft_here_doc(av[2]);
+			inf_or_outf[1] = get_fd(av[ac - 1], 1);
 		}
 		else
 		{
 			i = 2;
-			inf_or_outf[0] = get_fd(av[1] , 0);
+			inf_or_outf[0] = get_fd(av[1], 0);
 			inf_or_outf[1] = get_fd(av[ac - 1], 1);
 			dup2(inf_or_outf[0], 0);
 		}
 		while (i < ac - 2)
 			execute_cmd(av[1], av[i++], env);
 		dup2(inf_or_outf[1], 1);
-			child_cmd1(av[ac - 2], env);
+		child_cmd1(av[ac - 2], env);
 	}
 	else
-		return(ft_putstr_fd("syntax error try file1 cmd1 cmd2 ... cmdn file2", 2), 1);
+		return (ft_putstr_fd("syntax error try f1 cmd ... cmdn file2", 2), 1);
 }
