@@ -9,7 +9,6 @@ CC = cc
 OBJF_B = $(SRCS_B:.c=.o)
 OBJF = $(SRCS:.c=.o)
 NAME = pipex
-NAME_B = pipex_bonus
 
 RESET		=	'\033[0m'
 GREEN		=	'\033[32m'
@@ -21,15 +20,15 @@ ITALIC		=	'\033[3m'
 			@$(CC) $(CFLAGS) -c $< -o $@
 
 all  :$(NAME)
-bonus : $(NAME_B)
+
+bonus	: $(OBJF_B)
+			@echo $(ITALIC)$(GRAY) "     - creating the executable file $(NAME) ..." $(RESET)
+			@$(CC) $(CFLAGS) $(OBJF_B) -o $(NAME)
 
 $(NAME) : $(OBJF)
 			@echo $(ITALIC)$(GRAY) "     - creating the executable file $(NAME) ..." $(RESET)
 			@$(CC) $(CFLAGS) $(OBJF) -o $(NAME)
 
-$(NAME_B) : $(OBJF_B)
-			@echo $(ITALIC)$(GRAY) "     - creating the executable file $(NAME_B) ..." $(RESET)
-			@$(CC) $(CFLAGS) $(OBJF_B) -o $(NAME_B)
 clean	: 
 			@echo $(ITALIC)$(GRAY) "     - deleting the object files..." $(RESET)
 			@$(RM) $(OBJF) $(OBJF_B)
