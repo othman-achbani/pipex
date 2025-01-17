@@ -6,7 +6,7 @@
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 17:34:23 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/16 17:13:13 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/17 10:05:06 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	ft_writefree(char *str, char **spl, char *exe)
 int	check_spaces(char *av)
 {
 	int	i;
-	int	j;
 
 	i = 0;
 	while (av[i] == ' ')

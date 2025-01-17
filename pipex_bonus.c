@@ -6,7 +6,7 @@
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 19:32:30 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/16 22:25:34 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/17 11:15:49 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	child_cmd1(char *av, char **env)
 	ft_writefree("i can't execute this command :", str);
 }
 
-void	execute_cmd(char *file, char *str, char **env)
+void	execute_cmd(char *str, char **env)
 {
 	int		pipefd[2];
 	pid_t	i;
@@ -73,14 +73,14 @@ void	execute_cmd(char *file, char *str, char **env)
 	{
 		close(pipefd[0]);
 		if (dup2(pipefd[1], 1) == -1)
-			perror("dup2 just failed");
+			ft_putstr_fd("dup2 just failed", 2);
 		child_cmd1(str, env);
 	}
 	else
 	{
 		close(pipefd[1]);
 		if (dup2(pipefd[0], 0) == -1)
-			perror("dup2 just failed");
+			ft_putstr_fd("dup2 just failed", 2);
 		wait(NULL);
 	}
 }
@@ -96,20 +96,20 @@ int	main(int ac, char **av, char **env)
 		{
 			i = 3;
 			inf_or_outf[0] = ft_here_doc(av[2]);
-			inf_or_outf[1] = get_fd(av[ac - 1], 1);
 		}
 		else
 		{
 			i = 2;
 			inf_or_outf[0] = get_fd(av[1], 0);
-			inf_or_outf[1] = get_fd(av[ac - 1], 1);
 			dup2(inf_or_outf[0], 0);
 		}
+		inf_or_outf[1] = get_fd(av[ac - 1], 1);
 		while (i < ac - 2)
-			execute_cmd(av[1], av[i++], env);
+			execute_cmd(av[i++], env);
 		dup2(inf_or_outf[1], 1);
 		child_cmd1(av[ac - 2], env);
 	}
 	else
-		return (ft_putstr_fd("syntax error try f1 cmd ... cmdn file2", 2), 1);
+		return (ft_putstr_fd("syntax error try f1 cmd1 ... cmdn file2", 2), 1);
+	return (close(inf_or_outf[0]), close(inf_or_outf[1]));
 }
