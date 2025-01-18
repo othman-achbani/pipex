@@ -6,7 +6,7 @@
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 14:39:17 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/16 18:48:21 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/18 18:52:52 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,29 @@ char	*ft_strchr(char *str, int c)
 	if (str[i] == (char)c)
 		return ((char *)&str[i]);
 	return (NULL);
+}
+
+char	*ft_getstrjoin(char *s1, char *s2)
+{
+	size_t	i;
+	char	*p;
+	int		j;
+
+	if (!s1)
+		s1 = ft_strdup("");
+	if (!s1 || !s2)
+		return (NULL);
+	i = ft_strlen(s1) + ft_strlen(s2);
+	p = malloc(i + 1);
+	if (!p)
+		return (free(s1), NULL);
+	i = -1;
+	j = -1;
+	while (s1[++i])
+		p[i] = s1[i];
+	while (s2[++j])
+		p[i++] = s2[j];
+	p[i] = '\0';
+	free(s1);
+	return (p);
 }

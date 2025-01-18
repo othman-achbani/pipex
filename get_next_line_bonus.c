@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 15:26:12 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/16 18:34:59 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/18 18:22:46 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*ft_read_add(char *str, int fd)
 		if (readed == -1)
 			return (free(buffer), free(str), NULL);
 		buffer[readed] = '\0';
-		str = ft_strjoin(str, buffer);
+		str = ft_getstrjoin(str, buffer);
 		if (!str)
 			return (free(str), NULL);
 	}

@@ -6,7 +6,7 @@
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 19:38:08 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/17 10:09:56 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/18 18:22:56 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,17 @@
 
 # endif
 
+typedef struct s_pipex
+{
+	char	**env;
+	int		inf;
+	int		outf;
+	int		ac;
+}				t_pipex;
+
+void	for_norm(int infd, char *file1, int *i);
+void	cold_arms(char *line, char *limiter);
+t_pipex	fill_the_struct(int ac, int *in_ou_f, char **env);
 void	ft_writefreecmd(char *str, char **spl);
 void	ft_free(char **tab);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -49,5 +60,6 @@ void	error(int i);
 void	empty_or_space(char *str, char **spl);
 char	*get_next_line(int fd);
 char	*ft_strchr(char *str, int c);
-int		ft_here_doc(char *limiter);
+int		ft_here_doc(char *limiter, int *i);
+char	*ft_getstrjoin(char *s1, char *s2);
 #endif

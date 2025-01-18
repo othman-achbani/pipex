@@ -6,7 +6,7 @@
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 19:03:28 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/17 10:23:56 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/18 18:49:43 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ int	get_fd(char *av, int i)
 	return (file);
 }
 
-int	ft_here_doc(char *limiter)
+int	ft_here_doc(char *limiter, int *i)
 {
 	int		pipefd[2];
 	char	*line;
 	pid_t	pid;
 
-	line = get_next_line(0);
+	*i = 3;
 	if (pipe(pipefd) == -1)
 		error(1);
 	pid = fork();
@@ -58,13 +58,13 @@ int	ft_here_doc(char *limiter)
 		error(1);
 	if (pid == 0)
 	{
+		line = get_next_line(0);
 		close(pipefd[0]);
 		while (line)
 		{
-			if (ft_strncmp(ft_strjoin(limiter, "\n"), \
-			line, ft_strlen(limiter) + 1) == 0)
-				return (free(line), exit(EXIT_SUCCESS), 0);
+			cold_arms(line, limiter);
 			write(pipefd[1], line, ft_strlen(line));
+			free(line);
 			line = get_next_line(0);
 		}
 		free(line);

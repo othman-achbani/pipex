@@ -6,7 +6,7 @@
 /*   By: oachbani <oachbani@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 17:34:23 by oachbani          #+#    #+#             */
-/*   Updated: 2025/01/17 10:15:30 by oachbani         ###   ########.fr       */
+/*   Updated: 2025/01/18 19:03:47 by oachbani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,13 @@ char	*ft_checkfirst(char *str)
 
 void	ft_writefree(char *str, char **spl)
 {
-	ft_putstr_fd(str, 2);
-	ft_putstr_fd(spl[0], 2);
+	char	*join;
+
+	join =ft_strjoin(str , spl[0]);
+	ft_putstr_fd(join, 2);
 	ft_putstr_fd("\n", 2);
 	ft_free(spl);
+	free(join);
 	exit(127);
 }
 
