@@ -29,7 +29,7 @@ void	cold_arms(char *line, char *limiter)
 
 void	for_norm(int infd, char *file1, int *i)
 {
-	*i = 2;
+	*i = 1;
 	infd = get_fd(file1, 0);
 	dup2(infd, 0);
 }
