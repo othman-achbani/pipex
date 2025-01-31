@@ -50,7 +50,7 @@ int	ft_here_doc(char *limiter, int *i)
 	char	*line;
 	pid_t	pid;
 
-	*i = 3;
+	*i = 2;
 	if (pipe(pipefd) == -1)
 		error(1);
 	pid = fork();
